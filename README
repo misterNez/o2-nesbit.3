@@ -1,63 +1,33 @@
-#o2-nesbit.2
+#o2-nesbit.3
 Author: Nick Nesbit
-Operating Systems Project 2
-Concurret Unix Processes and Shared Memory
+Operating Systems Project 3
+Message Passing and OS Simulator
 
-git repository: https://github.com/misterNez/o2-nesbit.2
+git repository: https://github.com/misterNez/o2-nesbit.3
 
-For help: ./master -h
+For help: ./oss -h
 
-To run: ./master -n [INTEGER]
+To run: ./oss (default values set)
+
+Options:
+        -s [integer]    Set the number of slave processes (default: 5)
+
+        -l [filename]   Set the name of the produced log file (default: nesbitP3.log)
+
+        -t [integer]    Set the length of program timeout in seconds (default: 20)
      
-     *Example: ./master -n 15
+     *Example: ./master -s 10 -l newfile.log -t 30
 
-     *WARNING: SIGNAL HANDLING NOT IMPLEMENTED. PERFORMING AN CRTL-C OR OTHER INTERRUPT MAY END THE PROGRAM WITHOUT CLEANING UP SHARED MEMORY.
  
-     *Program will usually finish running in under one minute.
-
-     *The n option specifies number of consumer processes
-     
-     *Hard coded to read from a file called text.txt
-
 Basic function:
-     master.c:
-        *master is the root process. Master will fork one producer process and several
-        consumer processes.
+     oss.c:
 
-        *master process manages the shared memory used in this project.
 
-        *master waits for children to finish.
+     user.c:
 
-     producer.c:
-        *producer connects to the shared the memory
-
-        *producer reads lines from a file called text.txt and pusts them in shared memory.
-
-        *producer waits if shared memory buffer is full.
-
-        *Producer ends when end of file is reached.
-
-        *producer keeps a log file called prod.log
-
-     consumer.c:
-        *consumers take turns looking into the shared memory buffer.
-
-        *consumers implement the multiple process solution found in the lecture notes
-
-        *consumers read lines from the buffer and write them into a file called mast.file
-
-        *consumers also have a unique log file called consxx.log where xx is the id number.
-
-     master.h:
-        *header file used for shared memory structure. 
 
      Makefile:
-        make: Builds three executables: master, producer, consumer
+        make: Builds two executables: oss, user
         make clean: Removes object files, log files, and execuatable files.
 
 Difficulties:
-    *No script to analyze results.
-
-    *Signal handling not implemented.
-
-    *100 second timer not implemented.
