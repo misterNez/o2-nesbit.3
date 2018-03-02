@@ -1,0 +1,63 @@
+#o2-nesbit.2
+Author: Nick Nesbit
+Operating Systems Project 2
+Concurret Unix Processes and Shared Memory
+
+git repository: https://github.com/misterNez/o2-nesbit.2
+
+For help: ./master -h
+
+To run: ./master -n [INTEGER]
+     
+     *Example: ./master -n 15
+
+     *WARNING: SIGNAL HANDLING NOT IMPLEMENTED. PERFORMING AN CRTL-C OR OTHER INTERRUPT MAY END THE PROGRAM WITHOUT CLEANING UP SHARED MEMORY.
+ 
+     *Program will usually finish running in under one minute.
+
+     *The n option specifies number of consumer processes
+     
+     *Hard coded to read from a file called text.txt
+
+Basic function:
+     master.c:
+        *master is the root process. Master will fork one producer process and several
+        consumer processes.
+
+        *master process manages the shared memory used in this project.
+
+        *master waits for children to finish.
+
+     producer.c:
+        *producer connects to the shared the memory
+
+        *producer reads lines from a file called text.txt and pusts them in shared memory.
+
+        *producer waits if shared memory buffer is full.
+
+        *Producer ends when end of file is reached.
+
+        *producer keeps a log file called prod.log
+
+     consumer.c:
+        *consumers take turns looking into the shared memory buffer.
+
+        *consumers implement the multiple process solution found in the lecture notes
+
+        *consumers read lines from the buffer and write them into a file called mast.file
+
+        *consumers also have a unique log file called consxx.log where xx is the id number.
+
+     master.h:
+        *header file used for shared memory structure. 
+
+     Makefile:
+        make: Builds three executables: master, producer, consumer
+        make clean: Removes object files, log files, and execuatable files.
+
+Difficulties:
+    *No script to analyze results.
+
+    *Signal handling not implemented.
+
+    *100 second timer not implemented.
