@@ -10,6 +10,8 @@ For help: ./oss -h
 To run: ./oss (default values set)
 
 Options:
+        -h		Display the help menu       
+
         -s [integer]    Set the number of slave processes (default: 5)
 
         -l [filename]   Set the name of the produced log file (default: nesbitP3.log)
@@ -18,16 +20,33 @@ Options:
      
      *Example: ./master -s 10 -l newfile.log -t 30
 
+     
+     *Press Ctrl-C during execution to clean up resources and terminate all processes.
+
  
 Basic function:
      oss.c:
-
+        -Master file. Continuously spawns child processes and waits to receive messages from them.
+        -Spawns new child processes as old ones terminate.
+        -Messages are stored in a message queue, which is also used to enforce mutual exclusion
+        -Messages consist of a simulated clock, which is handled by a chunk of shared memory.
 
      user.c:
+        -Slave file. Continuously enters a critical region of code and adds a random amount of time to clock.
+        -Process is repeated until the total work is equal to a randomly generated duration period.
+        -Cedes the critical region to other slave processes after a round if duration not reached.
+        -Sends message to master process and terminates after critical loop.
 
+     message.h:
+        -Defines the data structure for the message queue.
+
+     timer.h:
+        -Defines the data structure for the shared memory timer.
 
      Makefile:
         make: Builds two executables: oss, user
         make clean: Removes object files, log files, and execuatable files.
 
-Difficulties:
+Notes:
+
+     Nice project. I learned a lot!

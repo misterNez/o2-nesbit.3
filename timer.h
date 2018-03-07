@@ -1,3 +1,5 @@
+//Shared memory clock stucture
+
 #ifndef TIMER_H_
 #define TIMER_H_
 
